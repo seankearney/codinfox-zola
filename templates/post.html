@@ -18,39 +18,54 @@
           <h2>Other Posts</h2>
           <ul class="related-posts">
             <li class="previous">
-            {% if page.earlier %}
-                <small>Earlier {</small>
-                <a href="{{ page.earlier.permalink }}">{{ page.earlier.title }}</a>
+            {% if page.higher %}
+                <small>Older {</small>
+                <a href="{{ page.higher.permalink }}">{{ page.higher.title }}</a>
                 <small>}</small>
             {% endif %}
             </li>
             <li class="next">
-            {% if page.later %}
+            {% if page.lower %}
                 <small>{</small>
-                <a href="{{ page.later.permalink }}">{{ page.later.title }}</a>
-                 <small>} Later</small>
+                <a href="{{ page.lower.permalink }}">{{ page.lower.title }}</a>
+                 <small>} Newer</small>
             {% endif %}
             </li>
           </ul>
         </div>
 
-        {% if config.extra.disqus_short_name %}
         <div class="comments">
           <h2>Comments</h2>
-          <div id="disqus_thread"></div>
-          <script>
-            var disqus_config = function () {
-            this.page.url = '{{ page.permalink | safe }}'; // Replace PAGE_URL with your page's canonical URL variable
-            this.page.identifier = '{{ page.title }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-            };
-            (function() {
-            var d = document, s = d.createElement('script');
-            s.src = 'https://{{ config.extra.disqus_short_name }}.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-            })();
-          </script>
-          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+          {% for asset in page.assets %}
+          {% if asset is matching("[.](yml)$") %}
+          {% set data = load_data(path=asset) %}
+
+          <div id="{{data.id}}" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="{{data.avatar}}" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">{{data.name}}</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#{{data.id}}">
+                    {{data.date}}
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                {{data.message | safe}}
+            </p>
         </div>
-        {% endif %}
+          
+          
+            {% endif %} 
+          {% endfor %}
+          
+        </div>
+
 {% endblock content %}

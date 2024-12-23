@@ -1,32 +1,4 @@
 
-{% macro disqus() %}
-  {% if config.extra.disqus_short_name is defined %}
-  <script id="dsq-count-scr" src="//{{ config.extra.disqus_short_name }}.disqus.com/count.js" async></script>
-  {% endif %}
-{% endmacro disqus %}
-
-
-{% macro sidebar_script() %}
-    <script>
-      (function(document) {
-        var toggle = document.querySelector('.sidebar-toggle');
-        var sidebar = document.querySelector('#sidebar');
-        var checkbox = document.querySelector('#sidebar-checkbox');
-
-        document.addEventListener('click', function(e) {
-          var target = e.target;
-
-          if (target === toggle) {
-            checkbox.checked = !checkbox.checked;
-            e.preventDefault();
-          } else if (checkbox.checked && !sidebar.contains(target)) {
-            /* click outside the sidebar when sidebar is open */
-            checkbox.checked = false;
-          }
-        }, false);
-      })(document);
-    </script>
-{% endmacro sidebar_script %}
 
 {% macro analytics_script() %}
     {% if config.extra.google_analytics_token %}

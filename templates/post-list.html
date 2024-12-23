@@ -39,9 +39,6 @@
               <span class="opaque-clock">&#x1F553;</span> {{ post.reading_time }} minute read
             </span>
             {% endif %}
-            {% if config.extra.disqus_short_name %}
-                <a href="{{ post.permalink }}#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
-            {% endif %}
             <a href="{{ post.permalink }}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
         </div>
     </div>
